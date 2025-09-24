@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TungstenAI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin: 40px 0 20px;
+            font-weight: 300;
+        }
+
+        .apps-section {
+            text-align: center;
+            margin: 50px 0;
+            padding: 40px 20px;
+            background-color: #252525;
+            border-radius: 8px;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .app-button {
+            display: inline-block;
+            transition: opacity 0.3s;
+        }
+
+        .app-button img {
+            height: 60px;
+            width: auto;
+        }
+
+        .app-button:hover {
+            opacity: 0.8;
+        }
+
+        .contact-section {
+            margin: 50px 0;
+            padding: 40px 20px;
+            background-color: #252525;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 300;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .legal-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #333;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .legal-section h3 {
+            color: #ffffff;
+            margin: 20px 0 10px;
+            font-weight: 300;
+        }
+
+        .legal-section p {
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        #form-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        #form-message.success {
+            background-color: #2d5016;
+            color: #9eff6a;
+        }
+
+        #form-message.error {
+            background-color: #5c1a1a;
+            color: #ff9999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TungstenAI</h1>
+            <p>Smart apps for smart people</p>
+        </header>
+
+        <section class="apps-section">
+            <h2>Our Apps</h2>
+            <p>Discover our applications available on iOS and Android</p>
+            <div class="app-buttons">
+                <a href="#" class="app-button">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Disponible sur Google Play">
+                </a>
+                <a href="#" class="app-button">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Télécharger dans l'App Store">
+                </a>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <h2>Contact Us</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit">Send</button>
+                <div id="form-message"></div>
+            </form>
+        </section>
+
+        <section class="legal-section">
+            <h2>Legal Notice</h2>
+            
+            <h3>Website Publisher</h3>
+            <p>
+                TungstenAI<br>
+                [Full Address]<br>
+                [Postal Code and City]<br>
+                Email: contact@tungstenai.com<br>
+                Phone: [Phone Number]
+            </p>
+
+            <h3>Publication Director</h3>
+            <p>[Name of Publication Director]</p>
+
+            <h3>Hosting</h3>
+            <p>
+                [Hosting Provider Name]<br>
+                [Hosting Provider Address]<br>
+                [Hosting Provider Phone]
+            </p>
+
+            <h3>Intellectual Property</h3>
+            <p>
+                All content on this website (texts, images, videos) is the exclusive property of TungstenAI, 
+                unless otherwise stated. Any reproduction, distribution, modification, adaptation, retransmission 
+                or publication of these elements is strictly prohibited without the express written consent of TungstenAI.
+            </p>
+
+            <h3>Personal Data</h3>
+            <p>
+                In accordance with the General Data Protection Regulation (GDPR), you have the right to access, 
+                rectify, delete and object to your personal data. To exercise this right, contact us at: 
+                contact@tungstenai.com
+            </p>
+
+            <h3>Cookies</h3>
+            <p>
+                This website does not use tracking cookies. The only cookies used are strictly necessary 
+                for the technical operation of the site.
+            </p>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 TungstenAI. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('form-message');
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Sending simulation (replace with your actual sending logic)
+            messageDiv.textContent = 'Message sent successfully! We will respond as soon as possible.';
+            messageDiv.className = 'success';
+            messageDiv.style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

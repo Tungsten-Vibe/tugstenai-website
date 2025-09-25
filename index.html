@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TungstenAI</title>
+    <title>Tugsten AI - Solutions Intelligentes</title>
     <style>
         * {
             margin: 0;
@@ -11,285 +11,920 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --accent: #a78bfa;
+            --bg-dark: #0a0a0b;
+            --bg-card: rgba(18, 18, 20, 0.6);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --border: rgba(99, 102, 241, 0.1);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(129, 140, 248, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .animated-bg {
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: linear-gradient(45deg, transparent 30%, rgba(99, 102, 241, 0.03) 50%, transparent 70%);
+            animation: shimmer 15s infinite linear;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 24px;
+            position: relative;
+            z-index: 2;
         }
 
         header {
             text-align: center;
-            margin-bottom: 60px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #333;
+            margin-bottom: 100px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            display: inline-block;
+            margin-bottom: 32px;
         }
 
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 300;
-            letter-spacing: 2px;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin: 100px 0;
+            padding: 80px 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 120%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+            transform: translateX(-50%);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
         }
 
         h2 {
-            font-size: 1.8em;
-            margin: 40px 0 20px;
-            font-weight: 300;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            margin-bottom: 20px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .apps-section {
-            text-align: center;
-            margin: 50px 0;
-            padding: 40px 20px;
-            background-color: #252525;
-            border-radius: 8px;
+        .section-description {
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
         }
 
-        .app-buttons {
+        .apps-grid {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             justify-content: center;
-            margin-top: 30px;
             flex-wrap: wrap;
+            margin-top: 48px;
         }
 
         .app-button {
-            display: inline-block;
-            transition: opacity 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
         }
 
-        .app-button img {
-            height: 60px;
-            width: auto;
+        .app-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+            transition: width 0.6s ease, height 0.6s ease;
+            transform: translate(-50%, -50%);
         }
 
         .app-button:hover {
-            opacity: 0.8;
+            transform: translateY(-2px);
+            background: rgba(99, 102, 241, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .app-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .app-button img {
+            height: 50px;
+            width: auto;
+            filter: brightness(0.95);
         }
 
         .contact-section {
-            margin: 50px 0;
-            padding: 40px 20px;
-            background-color: #252525;
-            border-radius: 8px;
+            margin: 80px 0;
+            padding: 60px 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 32px;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 300;
-        }
-
-        input, textarea {
+        .contact-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .contact-button:hover::before {
+            left: 100%;
+        }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin: 80px 0;
+        }
+
+        .feature-card {
+            padding: 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
             padding: 12px;
-            background-color: #1a1a1a;
-            border: 1px solid #444;
-            border-radius: 4px;
-            color: #ffffff;
-            font-size: 16px;
-            font-family: inherit;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(167, 139, 250, 0.2) 100%);
+            border-radius: 12px;
         }
 
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #666;
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        button {
-            background-color: #ffffff;
-            color: #1a1a1a;
-            padding: 12px 40px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #e0e0e0;
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         .legal-section {
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 1px solid #333;
-            font-size: 0.9em;
-            color: #aaa;
+            margin-top: 100px;
+            padding: 60px 40px;
+            background: rgba(18, 18, 20, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
         }
 
         .legal-section h3 {
-            color: #ffffff;
-            margin: 20px 0 10px;
-            font-weight: 300;
+            color: var(--primary-light);
+            margin: 32px 0 16px;
+            font-weight: 600;
+            font-size: 1.2rem;
         }
 
         .legal-section p {
-            margin-bottom: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.8;
         }
 
         footer {
             text-align: center;
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid #333;
-            color: #666;
-            font-size: 0.9em;
+            margin-top: 80px;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
         }
 
-        #form-message {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 4px;
-            display: none;
-        }
+        @media (max-width: 768px) {
+            .hero-section, .contact-section, .legal-section {
+                padding: 40px 24px;
+            }
 
-        #form-message.success {
-            background-color: #2d5016;
-            color: #9eff6a;
-        }
-
-        #form-message.error {
-            background-color: #5c1a1a;
-            color: #ff9999;
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
+    <script>
+        const translations = {
+            'fr': {
+                'title': 'Tugsten AI - Solutions Intelligentes',
+                'tagline': 'Solutions Intelligentes pour Demain',
+                'advanced_ai': 'IA Avancée',
+                'advanced_ai_desc': 'Intelligence artificielle de pointe alimentant les applications nouvelle génération',
+                'smart_processing': 'Traitement Intelligent',
+                'smart_processing_desc': 'Traitement ultra-rapide avec algorithmes d\'optimisation intelligents',
+                'secure_private': 'Sécurité & Privé',
+                'secure_private_desc': 'Sécurité de niveau entreprise avec protection complète de la confidentialité des données',
+                'our_apps': 'Nos Applications',
+                'coming_soon': 'Bientôt Disponible',
+                'apps_dev': 'Nos applications innovantes alimentées par l\'IA sont actuellement en développement et seront bientôt disponibles sur l\'App Store.',
+                'contact_us': 'Nous Contacter',
+                'app_store': 'App Store',
+                'all_rights': 'Tous droits réservés'
+            },
+            'en': {
+                'title': 'Tugsten AI - Intelligent Solutions',
+                'tagline': 'Intelligent Solutions for Tomorrow',
+                'advanced_ai': 'Advanced AI',
+                'advanced_ai_desc': 'Cutting-edge artificial intelligence powering next-generation applications',
+                'smart_processing': 'Smart Processing',
+                'smart_processing_desc': 'Lightning-fast processing with intelligent optimization algorithms',
+                'secure_private': 'Secure & Private',
+                'secure_private_desc': 'Enterprise-grade security with complete data privacy protection',
+                'our_apps': 'Our Applications',
+                'coming_soon': 'Coming Soon',
+                'apps_dev': 'Our innovative AI-powered applications are currently in development and will be available on the App Store soon.',
+                'contact_us': 'Contact Us',
+                'app_store': 'App Store',
+                'all_rights': 'All rights reserved'
+            },
+            'it': {
+                'title': 'Tugsten AI - Soluzioni Intelligenti',
+                'tagline': 'Soluzioni Intelligenti per il Domani',
+                'advanced_ai': 'IA Avanzata',
+                'advanced_ai_desc': 'Intelligenza artificiale all\'avanguardia che alimenta applicazioni di nuova generazione',
+                'smart_processing': 'Elaborazione Intelligente',
+                'smart_processing_desc': 'Elaborazione ultraveloce con algoritmi di ottimizzazione intelligenti',
+                'secure_private': 'Sicuro e Privato',
+                'secure_private_desc': 'Sicurezza di livello aziendale con protezione completa della privacy dei dati',
+                'our_apps': 'Le Nostre Applicazioni',
+                'coming_soon': 'Prossimamente',
+                'apps_dev': 'Le nostre innovative applicazioni basate su IA sono attualmente in sviluppo e saranno presto disponibili su App Store.',
+                'contact_us': 'Contattaci',
+                'app_store': 'App Store',
+                'all_rights': 'Tutti i diritti riservati'
+            },
+            'es': {
+                'title': 'Tugsten AI - Soluciones Inteligentes',
+                'tagline': 'Soluciones Inteligentes para el Mañana',
+                'advanced_ai': 'IA Avanzada',
+                'advanced_ai_desc': 'Inteligencia artificial de vanguardia que impulsa aplicaciones de nueva generación',
+                'smart_processing': 'Procesamiento Inteligente',
+                'smart_processing_desc': 'Procesamiento ultrarrápido con algoritmos de optimización inteligentes',
+                'secure_private': 'Seguro y Privado',
+                'secure_private_desc': 'Seguridad de nivel empresarial con protección completa de la privacidad de los datos',
+                'our_apps': 'Nuestras Aplicaciones',
+                'coming_soon': 'Próximamente',
+                'apps_dev': 'Nuestras innovadoras aplicaciones impulsadas por IA están actualmente en desarrollo y estarán disponibles en App Store pronto.',
+                'contact_us': 'Contáctanos',
+                'app_store': 'App Store',
+                'all_rights': 'Todos los derechos reservados'
+            },
+            'de': {
+                'title': 'Tugsten AI - Intelligente Lösungen',
+                'tagline': 'Intelligente Lösungen für Morgen',
+                'advanced_ai': 'Fortgeschrittene KI',
+                'advanced_ai_desc': 'Modernste künstliche Intelligenz für Anwendungen der nächsten Generation',
+                'smart_processing': 'Intelligente Verarbeitung',
+                'smart_processing_desc': 'Blitzschnelle Verarbeitung mit intelligenten Optimierungsalgorithmen',
+                'secure_private': 'Sicher & Privat',
+                'secure_private_desc': 'Sicherheit auf Unternehmensniveau mit vollständigem Datenschutz',
+                'our_apps': 'Unsere Anwendungen',
+                'coming_soon': 'Demnächst',
+                'apps_dev': 'Unsere innovativen KI-gestützten Anwendungen befinden sich derzeit in der Entwicklung und werden bald im App Store verfügbar sein.',
+                'contact_us': 'Kontakt',
+                'app_store': 'App Store',
+                'all_rights': 'Alle Rechte vorbehalten'
+            },
+            'no': {
+                'title': 'Tugsten AI - Intelligente Løsninger',
+                'tagline': 'Intelligente Løsninger for i Morgen',
+                'advanced_ai': 'Avansert AI',
+                'advanced_ai_desc': 'Banebrytende kunstig intelligens som driver neste generasjons applikasjoner',
+                'smart_processing': 'Smart Prosessering',
+                'smart_processing_desc': 'Lynrask prosessering med intelligente optimeringsalgoritmer',
+                'secure_private': 'Sikker og Privat',
+                'secure_private_desc': 'Sikkerhet på bedriftsnivå med fullstendig personvernbeskyttelse',
+                'our_apps': 'Våre Applikasjoner',
+                'coming_soon': 'Kommer Snart',
+                'apps_dev': 'Våre innovative AI-drevne applikasjoner er for tiden under utvikling og vil snart være tilgjengelige i App Store.',
+                'contact_us': 'Kontakt Oss',
+                'app_store': 'App Store',
+                'all_rights': 'Alle rettigheter forbeholdt'
+            }
+        };
+
+        let currentLang = 'fr';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            updateLanguage();
+            // Close dropdown after selection
+            document.getElementById('langDropdown').style.display = 'none';
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('langDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+
+            // Update current language display
+            document.querySelector('.current-lang').textContent = currentLang.toUpperCase();
+
+            // Update document title
+            document.title = t.title;
+
+            // Update all translatable elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (t[key]) {
+                    element.textContent = t[key];
+                }
+            });
+
+            // Update legal section
+            const legalSection = document.querySelector('.legal-section');
+            if (legalSection) {
+                if (currentLang === 'en') {
+                    legalSection.innerHTML = `
+                        <h2>Legal Information</h2>
+
+                        <h3>Publisher</h3>
+                        <p>
+                            Tugsten AI<br>
+                            Email: tungstenvibe@gmail.com<br>
+                            Headquarters: France
+                        </p>
+
+                        <h3>Terms of Use</h3>
+                        <p>
+                            The use of our mobile applications available on the App Store is subject to these terms. By downloading and using our applications, you accept these terms without reservation.
+                        </p>
+
+                        <h3>Personal Data Protection</h3>
+                        <p>
+                            In accordance with GDPR and data protection laws, your personal data is processed securely. You have the right to access, rectify, delete and port your data. To exercise these rights: tungstenvibe@gmail.com
+                        </p>
+                        <p>
+                            We only collect data strictly necessary for the application to function. No data is shared with third parties without your explicit consent.
+                        </p>
+
+                        <h3>Intellectual Property</h3>
+                        <p>
+                            All elements of our applications (code, design, logos, content) are protected by copyright. Any unauthorized reproduction or use is prohibited and subject to prosecution.
+                        </p>
+
+                        <h3>Liability</h3>
+                        <p>
+                            Our applications are provided "as is". We strive to ensure their proper functioning but cannot guarantee permanent availability or the complete absence of errors. Our liability is limited to direct and foreseeable damages.
+                        </p>
+
+                        <h3>In-App Purchases</h3>
+                        <p>
+                            In-app purchases are managed by Apple in accordance with App Store terms. Refunds are subject to Apple's policy. Prices are shown including tax in euros.
+                        </p>
+
+                        <h3>Applicable Law</h3>
+                        <p>
+                            These terms are governed by French law. In case of dispute, French courts have jurisdiction.
+                        </p>
+
+                        <h3>Contact</h3>
+                        <p>
+                            For any questions regarding the terms of use or to exercise your rights: tungstenvibe@gmail.com
+                        </p>
+                    `;
+                } else {
+                    legalSection.innerHTML = `
+                        <h2>Mentions Légales</h2>
+
+                        <h3>Éditeur</h3>
+                        <p>
+                            Tugsten AI<br>
+                            Email : tungstenvibe@gmail.com<br>
+                            Siège social : France
+                        </p>
+
+                        <h3>Conditions Générales d'Utilisation</h3>
+                        <p>
+                            L'utilisation de nos applications mobiles disponibles sur l'App Store est soumise aux présentes conditions. En téléchargeant et utilisant nos applications, vous acceptez ces conditions sans réserve.
+                        </p>
+
+                        <h3>Protection des Données Personnelles</h3>
+                        <p>
+                            Conformément au RGPD et à la loi Informatique et Libertés, vos données personnelles sont traitées de manière sécurisée. Vous disposez d'un droit d'accès, de rectification, de suppression et de portabilité de vos données. Pour exercer ces droits : tungstenvibe@gmail.com
+                        </p>
+                        <p>
+                            Nous ne collectons que les données strictement nécessaires au fonctionnement de l'application. Aucune donnée n'est partagée avec des tiers sans votre consentement explicite.
+                        </p>
+
+                        <h3>Propriété Intellectuelle</h3>
+                        <p>
+                            L'ensemble des éléments de nos applications (code, design, logos, contenus) sont protégés par le droit d'auteur. Toute reproduction ou utilisation non autorisée est interdite et passible de poursuites.
+                        </p>
+
+                        <h3>Responsabilité</h3>
+                        <p>
+                            Nos applications sont fournies "en l'état". Nous nous efforçons d'assurer leur bon fonctionnement mais ne pouvons garantir une disponibilité permanente ni l'absence totale d'erreurs. Notre responsabilité est limitée aux dommages directs et prévisibles.
+                        </p>
+
+                        <h3>Achats Intégrés</h3>
+                        <p>
+                            Les achats intégrés sont gérés par Apple conformément aux conditions de l'App Store. Les remboursements sont soumis à la politique d'Apple. Les prix sont indiqués TTC en euros.
+                        </p>
+
+                        <h3>Loi Applicable</h3>
+                        <p>
+                            Les présentes conditions sont régies par le droit français. En cas de litige, les tribunaux français sont compétents.
+                        </p>
+
+                        <h3>Contact</h3>
+                        <p>
+                            Pour toute question relative aux conditions d'utilisation ou pour exercer vos droits : tungstenvibe@gmail.com
+                        </p>
+                    `;
+                }
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLanguage();
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-selector')) {
+                document.getElementById('langDropdown').style.display = 'none';
+            }
+        });
+    </script>
 </head>
 <body>
+    <div class="animated-bg"></div>
+
     <div class="container">
         <header>
-            <h1>TungstenAI</h1>
-            <p>Smart apps for smart people</p>
+            <div style="position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000;">
+                <a href="mailto:tungstenvibe@gmail.com" style="
+                    color: var(--text-secondary);
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                    transition: color 0.3s ease;
+                " onmouseover="this.style.color='var(--primary-light)'" onmouseout="this.style.color='var(--text-secondary)'">
+                    tungstenvibe@gmail.com
+                </a>
+                <div class="language-selector" style="position: relative;">
+                    <button onclick="toggleDropdown()" style="
+                        padding: 10px 20px;
+                        background: rgba(99, 102, 241, 0.1);
+                        border: 1px solid rgba(99, 102, 241, 0.3);
+                        border-radius: 50px;
+                        color: var(--text-primary);
+                        cursor: pointer;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                        transition: all 0.3s ease;
+                        backdrop-filter: blur(10px);
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    " onmouseover="this.style.background='rgba(99, 102, 241, 0.2)';this.style.borderColor='var(--primary)'" onmouseout="this.style.background='rgba(99, 102, 241, 0.1)';this.style.borderColor='rgba(99, 102, 241, 0.3)'">
+                        <span class="current-lang">FR</span>
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="langDropdown" style="
+                        display: none;
+                        position: absolute;
+                        top: 100%;
+                        right: 0;
+                        margin-top: 8px;
+                        background: rgba(18, 18, 20, 0.95);
+                        border: 1px solid rgba(99, 102, 241, 0.3);
+                        border-radius: 12px;
+                        backdrop-filter: blur(20px);
+                        overflow: hidden;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    ">
+                        <button onclick="setLanguage('fr')" class="lang-option" style="
+                            display: block;
+                            width: 100%;
+                            padding: 12px 20px;
+                            background: none;
+                            border: none;
+                            color: var(--text-primary);
+                            cursor: pointer;
+                            font-size: 0.9rem;
+                            text-align: left;
+                            transition: background 0.2s ease;
+                        " onmouseover="this.style.background='rgba(99, 102, 241, 0.1)'" onmouseout="this.style.background='none'">
+                            🇫🇷 Français
+                        </button>
+                        <button onclick="setLanguage('en')" class="lang-option" style="
+                            display: block;
+                            width: 100%;
+                            padding: 12px 20px;
+                            background: none;
+                            border: none;
+                            color: var(--text-primary);
+                            cursor: pointer;
+                            font-size: 0.9rem;
+                            text-align: left;
+                            transition: background 0.2s ease;
+                        " onmouseover="this.style.background='rgba(99, 102, 241, 0.1)'" onmouseout="this.style.background='none'">
+                            🇬🇧 English
+                        </button>
+                        <button onclick="setLanguage('it')" class="lang-option" style="
+                            display: block;
+                            width: 100%;
+                            padding: 12px 20px;
+                            background: none;
+                            border: none;
+                            color: var(--text-primary);
+                            cursor: pointer;
+                            font-size: 0.9rem;
+                            text-align: left;
+                            transition: background 0.2s ease;
+                        " onmouseover="this.style.background='rgba(99, 102, 241, 0.1)'" onmouseout="this.style.background='none'">
+                            🇮🇹 Italiano
+                        </button>
+                        <button onclick="setLanguage('es')" class="lang-option" style="
+                            display: block;
+                            width: 100%;
+                            padding: 12px 20px;
+                            background: none;
+                            border: none;
+                            color: var(--text-primary);
+                            cursor: pointer;
+                            font-size: 0.9rem;
+                            text-align: left;
+                            transition: background 0.2s ease;
+                        " onmouseover="this.style.background='rgba(99, 102, 241, 0.1)'" onmouseout="this.style.background='none'">
+                            🇪🇸 Español
+                        </button>
+                        <button onclick="setLanguage('de')" class="lang-option" style="
+                            display: block;
+                            width: 100%;
+                            padding: 12px 20px;
+                            background: none;
+                            border: none;
+                            color: var(--text-primary);
+                            cursor: pointer;
+                            font-size: 0.9rem;
+                            text-align: left;
+                            transition: background 0.2s ease;
+                        " onmouseover="this.style.background='rgba(99, 102, 241, 0.1)'" onmouseout="this.style.background='none'">
+                            🇩🇪 Deutsch
+                        </button>
+                        <button onclick="setLanguage('no')" class="lang-option" style="
+                            display: block;
+                            width: 100%;
+                            padding: 12px 20px;
+                            background: none;
+                            border: none;
+                            color: var(--text-primary);
+                            cursor: pointer;
+                            font-size: 0.9rem;
+                            text-align: left;
+                            transition: background 0.2s ease;
+                        " onmouseover="this.style.background='rgba(99, 102, 241, 0.1)'" onmouseout="this.style.background='none'">
+                            🇳🇴 Norsk
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="logo">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" stroke="url(#gradient)" stroke-width="2" opacity="0.5"/>
+                    <circle cx="30" cy="30" r="20" fill="url(#gradient)" opacity="0.1"/>
+                    <path d="M20 30L25 35L40 20" stroke="url(#gradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="60" y2="60">
+                            <stop offset="0%" stop-color="#818cf8"/>
+                            <stop offset="100%" stop-color="#a78bfa"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1>Tugsten AI</h1>
+            <p class="tagline" data-translate="tagline">Solutions Intelligentes pour Demain</p>
         </header>
 
-        <section class="apps-section">
-            <h2>Our Apps</h2>
-            <p>Discover our applications available on iOS and Android</p>
-            <div class="app-buttons">
-                <a href="#" class="app-button">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Disponible sur Google Play">
-                </a>
-                <a href="#" class="app-button">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Télécharger dans l'App Store">
-                </a>
+        <div class="hero-cta" style="text-align: center; margin-bottom: 80px; animation: fadeInUp 0.8s ease-out 0.3s both; display: flex; justify-content: center; gap: 20px;">
+            <a href="#" class="cta-button" style="
+                display: inline-flex;
+                align-items: center;
+                gap: 12px;
+                padding: 18px 40px;
+                background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+                color: white;
+                text-decoration: none;
+                border-radius: 50px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            ">
+                <span style="
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                    transition: left 0.6s ease;
+                "></span>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" style="position: relative;">
+                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                </svg>
+                <span style="position: relative;" data-translate="app_store">App Store</span>
+            </a>
+            <a href="mailto:tungstenvibe@gmail.com" class="cta-button" style="
+                display: inline-flex;
+                align-items: center;
+                gap: 12px;
+                padding: 18px 40px;
+                background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+                color: white;
+                text-decoration: none;
+                border-radius: 50px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            ">
+                <span style="
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                    transition: left 0.6s ease;
+                "></span>
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="position: relative;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span style="position: relative;" data-translate="contact_us">Nous Contacter</span>
+            </a>
+        </div>
+
+        <style>
+            .cta-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+            }
+            .cta-button:hover span:first-child {
+                left: 100%;
+            }
+        </style>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#gradient)"/>
+                        <path d="M2 17L12 22L22 17" stroke="url(#gradient)"/>
+                        <path d="M2 12L12 17L22 12" stroke="url(#gradient)"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title" data-translate="advanced_ai">IA Avancée</h3>
+                <p class="feature-description" data-translate="advanced_ai_desc">Intelligence artificielle de pointe alimentant les applications nouvelle génération</p>
             </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="4" width="16" height="16" rx="2" stroke="url(#gradient)"/>
+                        <rect x="9" y="9" width="6" height="6" stroke="url(#gradient)"/>
+                        <line x1="9" y1="1" x2="9" y2="4" stroke="url(#gradient)"/>
+                        <line x1="15" y1="1" x2="15" y2="4" stroke="url(#gradient)"/>
+                        <line x1="9" y1="20" x2="9" y2="23" stroke="url(#gradient)"/>
+                        <line x1="15" y1="20" x2="15" y2="23" stroke="url(#gradient)"/>
+                        <line x1="20" y1="9" x2="23" y2="9" stroke="url(#gradient)"/>
+                        <line x1="20" y1="15" x2="23" y2="15" stroke="url(#gradient)"/>
+                        <line x1="1" y1="9" x2="4" y2="9" stroke="url(#gradient)"/>
+                        <line x1="1" y1="15" x2="4" y2="15" stroke="url(#gradient)"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title" data-translate="smart_processing">Traitement Intelligent</h3>
+                <p class="feature-description" data-translate="smart_processing_desc">Traitement ultra-rapide avec algorithmes d'optimisation intelligents</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L20 7V13C20 18 16 21 12 22C8 21 4 18 4 13V7L12 2Z" stroke="url(#gradient)"/>
+                        <path d="M9 12L11 14L15 10" stroke="url(#gradient)"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title" data-translate="secure_private">Sécurisé & Privé</h3>
+                <p class="feature-description" data-translate="secure_private_desc">Sécurité de niveau entreprise avec protection complète de la confidentialité des données</p>
+            </div>
+        </div>
+
+        <section class="hero-section">
+            <h2 data-translate="our_apps">Nos Applications</h2>
+            <p class="section-description" data-translate="coming_soon">Bientôt Disponible</p>
+            <p style="color: var(--text-secondary); font-size: 1rem; margin-top: 20px;" data-translate="apps_dev">Nos applications innovantes alimentées par l'IA sont actuellement en développement et seront bientôt disponibles sur l'App Store.</p>
         </section>
 
-        <section class="contact-section">
-            <h2>Contact Us</h2>
-            <form id="contact-form">
-                <div class="form-group">
-                    <label for="name">Name *</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message *</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-                <button type="submit">Send</button>
-                <div id="form-message"></div>
-            </form>
-        </section>
 
         <section class="legal-section">
-            <h2>Legal Notice</h2>
-            
-            <h3>Website Publisher</h3>
+            <h2>Mentions Légales</h2>
+
+            <h3>Éditeur</h3>
             <p>
-                TungstenAI<br>
-                [Full Address]<br>
-                [Postal Code and City]<br>
-                Email: contact@tungstenai.com<br>
-                Phone: [Phone Number]
+                Tugsten AI<br>
+                Email : tungstenvibe@gmail.com<br>
+                Siège social : France
             </p>
 
-            <h3>Publication Director</h3>
-            <p>[Name of Publication Director]</p>
-
-            <h3>Hosting</h3>
+            <h3>Conditions Générales d'Utilisation</h3>
             <p>
-                [Hosting Provider Name]<br>
-                [Hosting Provider Address]<br>
-                [Hosting Provider Phone]
+                L'utilisation de nos applications mobiles disponibles sur l'App Store est soumise aux présentes conditions. En téléchargeant et utilisant nos applications, vous acceptez ces conditions sans réserve.
             </p>
 
-            <h3>Intellectual Property</h3>
+            <h3>Protection des Données Personnelles</h3>
             <p>
-                All content on this website (texts, images, videos) is the exclusive property of TungstenAI, 
-                unless otherwise stated. Any reproduction, distribution, modification, adaptation, retransmission 
-                or publication of these elements is strictly prohibited without the express written consent of TungstenAI.
+                Conformément au RGPD et à la loi Informatique et Libertés, vos données personnelles sont traitées de manière sécurisée. Vous disposez d'un droit d'accès, de rectification, de suppression et de portabilité de vos données. Pour exercer ces droits : tungstenvibe@gmail.com
+            </p>
+            <p>
+                Nous ne collectons que les données strictement nécessaires au fonctionnement de l'application. Aucune donnée n'est partagée avec des tiers sans votre consentement explicite.
             </p>
 
-            <h3>Personal Data</h3>
+            <h3>Propriété Intellectuelle</h3>
             <p>
-                In accordance with the General Data Protection Regulation (GDPR), you have the right to access, 
-                rectify, delete and object to your personal data. To exercise this right, contact us at: 
-                contact@tungstenai.com
+                L'ensemble des éléments de nos applications (code, design, logos, contenus) sont protégés par le droit d'auteur. Toute reproduction ou utilisation non autorisée est interdite et passible de poursuites.
             </p>
 
-            <h3>Cookies</h3>
+            <h3>Responsabilité</h3>
             <p>
-                This website does not use tracking cookies. The only cookies used are strictly necessary 
-                for the technical operation of the site.
+                Nos applications sont fournies "en l'état". Nous nous efforçons d'assurer leur bon fonctionnement mais ne pouvons garantir une disponibilité permanente ni l'absence totale d'erreurs. Notre responsabilité est limitée aux dommages directs et prévisibles.
+            </p>
+
+            <h3>Achats Intégrés</h3>
+            <p>
+                Les achats intégrés sont gérés par Apple conformément aux conditions de l'App Store. Les remboursements sont soumis à la politique d'Apple. Les prix sont indiqués TTC en euros.
+            </p>
+
+            <h3>Loi Applicable</h3>
+            <p>
+                Les présentes conditions sont régies par le droit français. En cas de litige, les tribunaux français sont compétents.
+            </p>
+
+            <h3>Contact</h3>
+            <p>
+                Pour toute question relative aux conditions d'utilisation ou pour exercer vos droits : tungstenvibe@gmail.com
             </p>
         </section>
 
         <footer>
-            <p>&copy; 2025 TungstenAI. All rights reserved.</p>
+            <p>&copy; 2025 Tugsten AI. <span data-translate="all_rights">Tous droits réservés</span>.</p>
         </footer>
     </div>
-
-    <script>
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const messageDiv = document.getElementById('form-message');
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
-            };
-            
-            // Sending simulation (replace with your actual sending logic)
-            messageDiv.textContent = 'Message sent successfully! We will respond as soon as possible.';
-            messageDiv.className = 'success';
-            messageDiv.style.display = 'block';
-            
-            // Reset form
-            this.reset();
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 5000);
-        });
-    </script>
 </body>
 </html>
